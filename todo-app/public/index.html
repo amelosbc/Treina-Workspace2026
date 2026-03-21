@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      padding-top: 60px;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      width: 400px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .input-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .btn-add {
+      background: #4CAF50;
+      color: #fff;
+    }
+    .btn-add:hover { background: #45a049; }
+    .btn-remove {
+      background: #e74c3c;
+      color: #fff;
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+    .btn-remove:hover { background: #c0392b; }
+    ul {
+      list-style: none;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    li:last-child { border-bottom: none; }
+    .empty {
+      text-align: center;
+      color: #999;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Todo List</h1>
+    <div class="input-row">
+      <input type="text" id="todoInput" placeholder="Add a new task..." />
+      <button class="btn-add" id="addBtn">Add</button>
+    </div>
+    <ul id="todoList"></ul>
+  </div>
+
+  <script>
+    const input = document.getElementById('todoInput');
+    const addBtn = document.getElementById('addBtn');
+    const list = document.getElementById('todoList');
+
+    async function loadTodos() {
+      const res = await fetch('/api/todos');
+      const todos = await res.json();
+      list.innerHTML = '';
+      if (todos.length === 0) {
+        list.innerHTML = '<li class="empty">No tasks yet. Add one above!</li>';
+        return;
+      }
+      todos.forEach(todo => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span>${todo.title}</span>
+          <button class="btn-remove" onclick="removeTodo(${todo.id})">Remove</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    async function addTodo() {
+      const title = input.value.trim();
+      if (!title) return;
+      await fetch('/api/todos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title })
+      });
+      input.value = '';
+      loadTodos();
+    }
+
+    async function removeTodo(id) {
+      await fetch(`/api/todos/${id}`, { method: 'DELETE' });
+      loadTodos();
+    }
+
+    addBtn.addEventListener('click', addTodo);
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') addTodo();
+    });
+
+    loadTodos();
+  </script>
+</body>
+</html>
