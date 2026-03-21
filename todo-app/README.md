@@ -19,23 +19,53 @@ A simple Todo List web application built to explore and validate a full developm
 | Docker Desktop (Windows) | Container runtime integrated with WSL2 |
 | GitHub CLI (`gh`) | Repository creation and management |
 
-## Steps to Reproduce
+## How to Run
+
+### Option 1 — Local (Node.js)
+
+Requires Node.js 20+ installed on your machine.
+
+```bash
+cd todo-app
+npm install
+npm start
+```
+
+### Option 2 — Docker
+
+Requires Docker Desktop (or Docker Engine) running.
+
+```bash
+cd todo-app
+docker compose build
+docker compose up -d
+```
+
+To stop the container:
+
+```bash
+docker compose down
+```
+
+Both options serve the app at **http://localhost:3000**.
+
+> **Note:** Only run one option at a time — both use port 3000.
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/todos` | List all tasks |
+| `POST` | `/api/todos` | Add a new task (`{ "title": "..." }`) |
+| `DELETE` | `/api/todos/:id` | Remove a task by ID |
+
+## Steps to Reproduce (from scratch)
 
 1. **GitHub setup** — Configured `git` identity and authenticated `gh` CLI
 2. **Repository creation** — Created `Treina-Workspace2026` public repo via `gh repo create`
-3. **Application code** — Built the Express server (`server.js`) with three API endpoints:
-   - `GET /api/todos` — List all tasks
-   - `POST /api/todos` — Add a new task
-   - `DELETE /api/todos/:id` — Remove a task
+3. **Application code** — Built the Express server with three REST endpoints
 4. **Frontend** — Single HTML page (`public/index.html`) with inline CSS and JavaScript
 5. **Dockerization** — Created `Dockerfile` (Node 20 Alpine) and `docker-compose.yml`
-6. **Build and run** from WSL terminal:
-   ```bash
-   cd todo-app
-   docker compose build
-   docker compose up -d
-   ```
-7. **Access the app** at `http://localhost:3000`
 
 ## Project Structure
 
