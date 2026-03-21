@@ -2,7 +2,7 @@
 
 ## Objective
 
-A simple Todo List web application built to explore and validate a full development workflow using **Claude Code CLI**, **WSL2 Linux**, **Docker Desktop**, and **GitHub**. The app supports basic task management with add and remove operations.
+A simple Todo List web application built to explore and validate a full development workflow using **Claude Code CLI**, **WSL2 Linux**, **Docker Desktop**, **GitHub**, and **Playwright MCP**. The app supports basic task management with add and remove operations.
 
 ## Tech Stack
 
@@ -18,6 +18,7 @@ A simple Todo List web application built to explore and validate a full developm
 | WSL2 (Ubuntu on Windows) | Linux development environment |
 | Docker Desktop (Windows) | Container runtime integrated with WSL2 |
 | GitHub CLI (`gh`) | Repository creation and management |
+| Playwright MCP | Browser-based UI testing via Claude Code |
 
 ## How to Run
 
@@ -66,6 +67,58 @@ Both options serve the app at **http://localhost:3000**.
 3. **Application code** — Built the Express server with three REST endpoints
 4. **Frontend** — Single HTML page (`public/index.html`) with inline CSS and JavaScript
 5. **Dockerization** — Created `Dockerfile` (Node 20 Alpine) and `docker-compose.yml`
+6. **Browser testing with Playwright MCP** — Tested the running app end-to-end using Claude Code's Playwright MCP integration
+
+## Testing with Playwright MCP
+
+The app was tested interactively using the **Playwright MCP server** connected to Claude Code. This allows Claude to open a real browser, navigate the app, and interact with UI elements — all from the CLI.
+
+### Prerequisites
+
+- Docker Desktop running (the app must be up on `http://localhost:3000`)
+- Playwright MCP server configured in Claude Code (via `settings.json` or MCP config)
+
+### Steps
+
+1. **Start the app in Docker**
+
+   ```bash
+   cd todo-app
+   docker compose up -d --build
+   ```
+
+2. **Open the app in the Playwright browser**
+
+   Ask Claude Code to navigate to `http://localhost:3000`. Claude uses the `browser_navigate` MCP tool to open the page and returns a snapshot of the UI.
+
+3. **Add tasks**
+
+   Ask Claude to type a task name (e.g., "Buy groceries") in the input field and click the "Add" button. Repeat for multiple tasks. Claude uses `browser_fill_form` and `browser_click` to interact with the page.
+
+4. **Verify tasks appear**
+
+   After each add, Claude takes a page snapshot (`browser_snapshot`) and confirms the new task is listed.
+
+5. **Remove a task**
+
+   Ask Claude to click the "Remove" button next to a specific task. Claude confirms the task is deleted from the list.
+
+6. **Stop the app**
+
+   ```bash
+   docker compose down
+   ```
+
+### Test Results
+
+| Action | Input | Result |
+|--------|-------|--------|
+| Add task | "Buy groceries" | Task appeared in the list |
+| Add task | "Learn Docker" | Task appeared in the list |
+| Add task | "Test Playwright MCP" | Task appeared in the list |
+| Remove task | "Learn Docker" | Task removed, 2 remaining |
+
+All CRUD operations (Create, Read, Delete) worked as expected via the browser UI.
 
 ## Project Structure
 
