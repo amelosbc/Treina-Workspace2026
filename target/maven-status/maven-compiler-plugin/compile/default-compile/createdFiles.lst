@@ -1,0 +1,8 @@
+com/amelosbc/taskmanager/application/TaskDTO.class
+com/amelosbc/taskmanager/infrastructure/TaskController.class
+com/amelosbc/taskmanager/application/TaskService.class
+com/amelosbc/taskmanager/domain/TaskRepository.class
+com/amelosbc/taskmanager/infrastructure/ResourceNotFoundException.class
+com/amelosbc/taskmanager/infrastructure/GlobalExceptionHandler.class
+com/amelosbc/taskmanager/domain/Task.class
+com/amelosbc/taskmanager/TaskmanagerApplication.class
