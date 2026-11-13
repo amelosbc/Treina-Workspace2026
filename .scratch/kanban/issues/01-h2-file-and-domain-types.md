@@ -5,9 +5,9 @@ Configurar a persistência de dados no H2 em arquivo (`./data/taskdb`) para rete
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Atualizar `application.properties` para `jdbc:h2:file:./data/taskdb` com diretório ignorado no Git.
-- [ ] Criar enum `TaskStatus` (`TO_DO`, `IN_PROGRESS`, `IN_REVIEW`, `DONE`) no pacote domain.
-- [ ] Criar enum `TaskPriority` (`LOW`, `MEDIUM`, `HIGH`, `URGENT`) no pacote domain.
-- [ ] Teste unitário e de contexto do Spring garantindo que o banco sobe e cria o arquivo de dados sem erros.
+- [x] Atualizar `application.properties` para `jdbc:h2:file:./data/taskdb` com diretório ignorado no Git.
+- [x] Criar enum `TaskStatus` (`TO_DO`, `IN_PROGRESS`, `IN_REVIEW`, `DONE`) no pacote domain.
+- [x] Criar enum `TaskPriority` (`LOW`, `MEDIUM`, `HIGH`, `URGENT`) no pacote domain.
+- [x] Teste unitário e de contexto do Spring garantindo que o banco sobe e cria o arquivo de dados sem erros.

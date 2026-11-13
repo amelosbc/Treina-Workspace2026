@@ -1,8 +1,0 @@
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/TaskmanagerApplication.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/application/TaskDTO.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/application/TaskService.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/domain/Task.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/domain/TaskRepository.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/infrastructure/GlobalExceptionHandler.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/infrastructure/ResourceNotFoundException.java
-/home/asmelo/workspaces2026/Treina-Workspace2026/DIO/taskmanager/src/main/java/com/amelosbc/taskmanager/infrastructure/TaskController.java
