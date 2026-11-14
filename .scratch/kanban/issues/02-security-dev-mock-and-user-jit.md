@@ -5,10 +5,10 @@ Configurar a camada de segurança com Spring Security permitindo que requisiçõ
 
 **Blocked by:** 01: Persistência H2 em Arquivo e Tipos de Domínio
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Adicionar dependência `spring-boot-starter-security` e OAuth2 Resource Server no `pom.xml`.
-- [ ] Criar entidade `User` (`id`, `clerkUserId`, `email`, `name`, timestamps) e `UserRepository`.
-- [ ] Implementar `DevMockAuthFilter` e `SecurityConfig` liberando Swagger UI (`/swagger-ui/**`, `/api-docs/**`) e H2 Console (`/h2-console/**`).
-- [ ] Implementar serviço de sincronização JIT (`UserService`) que localiza ou cadastra o usuário no banco local.
-- [ ] Testes de integração validando a autenticação via mock e criação automática de usuário.
+- [x] Adicionar dependência `spring-boot-starter-security` e OAuth2 Resource Server no `pom.xml`.
+- [x] Criar entidade `User` (`id`, `clerkUserId`, `email`, `name`, timestamps) e `UserRepository`.
+- [x] Implementar `DevMockAuthFilter` e `SecurityConfig` liberando Swagger UI (`/swagger-ui/**`, `/api-docs/**`) e H2 Console (`/h2-console/**`).
+- [x] Implementar serviço de sincronização JIT (`UserService`) que localiza ou cadastra o usuário no banco local.
+- [x] Testes de integração validando a autenticação via mock e criação automática de usuário.
