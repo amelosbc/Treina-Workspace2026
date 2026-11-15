@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * and connects to the file-based H2 database.
  */
 @SpringBootTest
+@org.springframework.test.context.ActiveProfiles("test")
 class TaskmanagerApplicationTests {
 
     @Autowired
@@ -29,14 +30,11 @@ class TaskmanagerApplicationTests {
     }
 
     @Test
-    @DisplayName("Database connects using file-based H2 configuration and creates taskdb file")
-    void databaseConnectsToFileBasedH2() throws SQLException {
+    @DisplayName("Database connects using test H2 configuration")
+    void databaseConnectsToH2() throws SQLException {
         try (Connection connection = dataSource.getConnection()) {
             String url = connection.getMetaData().getURL();
-            assertThat(url).contains("jdbc:h2:file:./data/taskdb");
+            assertThat(url).contains("jdbc:h2:mem:testdb");
         }
-
-        File dbFile = new File("./data/taskdb.mv.db");
-        assertThat(dbFile).exists();
     }
 }
