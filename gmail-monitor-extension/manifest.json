@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "Gmail Keyword Monitor",
+  "version": "1.0.0",
+  "description": "Monitors your Gmail inbox for keyword matches and alerts you via push notifications, badge counter, and popup panel.",
+
+  "permissions": [
+    "identity",
+    "notifications",
+    "alarms",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://www.googleapis.com/*"
+  ],
+
+  "oauth2": {
+    "client_id": "YOUR_GOOGLE_OAUTH_CLIENT_ID.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_badge_text": ""
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

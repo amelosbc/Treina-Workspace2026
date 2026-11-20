@@ -1,0 +1,19 @@
+public import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        // Lê a linha de entrada contendo o nome do projeto
+        String nomeProjeto = scanner.nextLine();
+
+        // TODO: Converta o nome do projeto para letras maiúsculas e calcule seu comprimento
+
+        // Dica: Use métodos da classe String para manipular o texto.
+        // Imprima o nome em maiúsculas seguido de um espaço e do número de caracteres.
+
+        scanner.close();
+    }
+} {
+    
+}

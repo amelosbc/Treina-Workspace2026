@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gmail Monitor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="shell">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <span class="logo-mark">◈</span>
+        <div>
+          <h1 class="title">Gmail Monitor</h1>
+          <p class="subtitle" id="lastPollLabel">Checking…</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="icon-btn" id="btnRefresh" title="Poll now">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+        <button class="icon-btn" id="btnSettings" title="Settings">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Stats bar -->
+    <div class="stats-bar">
+      <div class="stat">
+        <span class="stat-value" id="statTotal">0</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value accent" id="statUnread">0</span>
+        <span class="stat-label">Unread</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat">
+        <span class="stat-value" id="statKeywords">0</span>
+        <span class="stat-label">Keywords</span>
+      </div>
+    </div>
+
+    <!-- Main panel (matches list) -->
+    <main class="panel" id="panelMatches">
+      <div class="empty-state" id="emptyState">
+        <span class="empty-icon">◎</span>
+        <p>No keyword matches yet.</p>
+        <p class="empty-hint">Polls every 5 minutes.</p>
+      </div>
+      <ul class="match-list" id="matchList"></ul>
+    </main>
+
+    <!-- Settings panel (hidden by default) -->
+    <section class="panel settings-panel hidden" id="panelSettings">
+      <div class="settings-group">
+        <label class="settings-label">Keywords <span class="settings-hint">(one per line)</span></label>
+        <textarea class="keywords-textarea" id="keywordsInput" placeholder="urgent&#10;invoice&#10;PR review&#10;critical"></textarea>
+      </div>
+      <div class="settings-actions">
+        <button class="btn btn-primary" id="btnSaveKeywords">Save keywords</button>
+        <button class="btn btn-ghost" id="btnClearAll">Clear all matches</button>
+      </div>
+      <div class="auth-section">
+        <button class="btn btn-outline" id="btnAuth">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Authenticate with Gmail
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer actions (only on matches panel) -->
+    <footer class="footer" id="footer">
+      <button class="btn btn-ghost btn-sm" id="btnMarkRead">Mark all read</button>
+    </footer>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
