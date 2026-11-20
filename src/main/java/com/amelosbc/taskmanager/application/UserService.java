@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final OnboardingService onboardingService;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, OnboardingService onboardingService) {
         this.userRepository = userRepository;
+        this.onboardingService = onboardingService;
     }
 
     @Transactional
@@ -20,9 +22,12 @@ public class UserService {
         User user = userRepository.findByClerkUserId(clerkUserId)
             .orElseGet(() -> {
                 User newUser = new User(clerkUserId, email, name);
-                return userRepository.save(newUser);
+                User savedUser = userRepository.save(newUser);
+                onboardingService.createInitialBoardForUser(savedUser);
+                return savedUser;
             });
 
         return CurrentUserContext.fromDomain(user);
     }
 }
+

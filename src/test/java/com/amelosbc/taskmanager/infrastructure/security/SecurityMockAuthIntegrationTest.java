@@ -26,10 +26,18 @@ class SecurityMockAuthIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
+    private com.amelosbc.taskmanager.domain.TaskRepository taskRepository;
+
+    @Autowired
+    private com.amelosbc.taskmanager.domain.BoardRepository boardRepository;
+
+    @Autowired
     private UserRepository userRepository;
 
     @BeforeEach
     void setUp() {
+        taskRepository.deleteAll();
+        boardRepository.deleteAll();
         userRepository.deleteAll();
     }
 

@@ -2,9 +2,14 @@ package com.amelosbc.taskmanager.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -16,7 +21,8 @@ import java.time.LocalDateTime;
  * JPA Entity representing a Task in the system.
  *
  * <p>Each task has a title, optional description, completion status,
- * and automatically managed timestamp fields.</p>
+ * Kanban status, priority, position within a column, optional board association,
+ * and automatically managed timestamp and soft delete fields.</p>
  */
 @Entity
 @Table(name = "tasks")
@@ -25,6 +31,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
 
     @NotBlank(message = "Title must not be blank")
     @Column(nullable = false)
@@ -35,11 +45,25 @@ public class Task {
     @Column(nullable = false)
     private boolean completed = false;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 30)
+    private TaskStatus status = TaskStatus.TO_DO;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "priority", length = 30)
+    private TaskPriority priority = TaskPriority.MEDIUM;
+
+    @Column(name = "position")
+    private Integer position = 0;
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     /**
      * Default constructor required by JPA.
@@ -59,6 +83,26 @@ public class Task {
     }
 
     /**
+     * Convenience constructor for creating a new Task associated with a Board.
+     *
+     * @param board       the associated board
+     * @param title       the task title
+     * @param description the task description
+     * @param status      the initial Kanban status
+     * @param priority    the priority level
+     * @param position    the position in the column
+     */
+    public Task(Board board, String title, String description, TaskStatus status, TaskPriority priority, Integer position) {
+        this.board = board;
+        this.title = title;
+        this.description = description;
+        this.status = status;
+        this.priority = priority;
+        this.position = position;
+        this.completed = (status == TaskStatus.DONE);
+    }
+
+    /**
      * Sets the creation timestamp before the entity is first persisted.
      */
     @PrePersist
@@ -75,6 +119,15 @@ public class Task {
         this.updatedAt = LocalDateTime.now();
     }
 
+    public boolean isDeleted() {
+        return this.deletedAt != null;
+    }
+
+    public void markDeleted() {
+        this.deletedAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
     // --- Getters and Setters ---
 
     public Long getId() {
@@ -83,6 +136,14 @@ public class Task {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setBoard(Board board) {
+        this.board = board;
     }
 
     public String getTitle() {
@@ -109,6 +170,30 @@ public class Task {
         this.completed = completed;
     }
 
+    public TaskStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public TaskPriority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -125,6 +210,14 @@ public class Task {
         this.updatedAt = updatedAt;
     }
 
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+
     @Override
     public String toString() {
         return "Task{" +
@@ -132,8 +225,12 @@ public class Task {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", completed=" + completed +
+                ", status=" + status +
+                ", priority=" + priority +
+                ", position=" + position +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
     }
 }
+
